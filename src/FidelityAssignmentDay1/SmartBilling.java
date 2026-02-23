@@ -1,0 +1,48 @@
+package FidelityAssignmentDay1;
+/*
+ Smart Billing Slab (no nested if allowed)
+
+Write a method: double calculateBill(double amount, boolean is FirstOrder)
+
+Rules (use only if-else, no nested if):
+
+- If amount < 500 give no discount
+
+- If amount ≥ 500 and < 1500 give 5% discount
+
+- If amount ≥ 1500 give 10% discount
+
+- If it is first order, give extra 2% discount on the final amount
+
+You must combine conditions correctly without using nested if.  java code
+ * */
+public class SmartBilling {
+	public static double calculateBill(double amount, boolean isFirstOrder) {
+
+        double finalAmount;
+        if (amount < 500) {
+            finalAmount = amount;
+        } 
+        else if (amount >= 500 && amount < 1500) {
+            finalAmount = amount - (amount * 0.05);  
+        } 
+        else { 
+            finalAmount = amount - (amount * 0.10);   
+        }
+
+        if (isFirstOrder) {
+            finalAmount = finalAmount - (finalAmount * 0.02);
+        }
+
+        return finalAmount;
+    }
+	public static void main(String[] args) {
+
+        double amount = 1600;
+        boolean isFirstOrder = true;
+
+        double totalBill = SmartBilling.calculateBill(amount, isFirstOrder);
+
+        System.out.println("Final Bill Amount: " + totalBill);
+    }
+}
