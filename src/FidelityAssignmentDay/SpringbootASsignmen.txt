@@ -1,0 +1,89 @@
+Spring Boot , APIs, Annotations on Book ArrayList
+
+Model Class
+
+public class Book {
+
+    private int bookId;
+    private String bookName;
+    private String author;
+
+    public Book() {
+    }
+
+    public Book(int bookId, String bookName, String author) {
+        this.bookId = bookId;
+        this.bookName = bookName;
+        this.author = author;
+    }
+
+    public int getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(int bookId) {
+        this.bookId = bookId;
+    }
+
+    public String getBookName() {
+        return bookName;
+    }
+
+    public void setBookName(String bookName) {
+        this.bookName = bookName;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+}
+
+Controller Class
+
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@RestController
+@RequestMapping("/books")
+public class BookController {
+
+    private List<Book> bookList = new ArrayList<>();
+
+    @PostMapping
+    public Book addBook(@RequestBody Book book) {
+        bookList.add(book);
+        return book;
+    }
+
+    @GetMapping
+    public List<Book> getAllBooks() {
+        return bookList;
+    }
+
+    @GetMapping("/{id}")
+    public Book getBookById(@PathVariable int id) {
+        for (Book b : bookList) {
+            if (b.getBookId() == id) {
+                return b;
+            }
+        }
+        return null;
+    }
+
+    @DeleteMapping("/{id}")
+    public String deleteBook(@PathVariable int id) {
+        for (Book b : bookList) {
+            if (b.getBookId() == id) {
+                bookList.remove(b);
+                return "Book deleted";
+            }
+        }
+        return "Book not found";
+    }
+}
